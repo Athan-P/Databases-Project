@@ -26,7 +26,7 @@ Listed alphabetically:
 
 Inside Windows PowerShell (make sure to *Run as Administrator*): Use `pip3 install <package_name>` to install each individual Python package (library) directly for the entire system. It is advised to create a virtual environment with the [`venv`](https://docs.python.org/3/library/venv.html) module. You should run `py -3 -m venv <VE_name>` to create your virtual environment and inside of it you can download the necessary packages. Use `<VE_name>\Scripts\activate` to activate it and then `cd <VE_name>` to get into the virtual environment. In case it doesn't activate, use `Set-ExecutionPolicy RemoteSigned` and then `Set-ExecutionPolicy Restricted` when you finish using the Web Application. 
 
-The necessary packages for this app are listed in [`requirements.txt`](https://github.com/Athan-P/Databases-Project/blob/main/requirements.txt) and can be installed all together via `pip install -r requirements.txt`. The Virtual Environement should be preferable in the htdocs file of xampp for Windows. Your Database files should all be inside the Virtual Environment, after you download and unzip it from GitHub.
+The necessary packages for this app are listed in [`requirements.txt`](https://github.com/Athan-P/Databases-Project/blob/main/requirements.txt) and can be installed all together via `pip install -r requirements.txt`. You install them inside the Virtual Environment and inside the file that contains requirements.txt. The Virtual Environement should be preferable in the htdocs file of xampp for Windows. Your Database files should all be inside the Virtual Environment, after you download and unzip it from GitHub.
 
 ## Creation of the Database
 
