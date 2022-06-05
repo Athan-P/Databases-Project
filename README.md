@@ -38,15 +38,14 @@ When inside the Database, Run via the `setx FLASK_APP "Run.py"` command, to set 
 
 ## Screenshots
 
-![landing1]()
+![landing1](https://user-images.githubusercontent.com/59802631/172061833-fb437523-4930-4da7-bfa3-39b420d663ee.png)
 
-![landing2]()
+![landing2](https://user-images.githubusercontent.com/59802631/172061870-73f3ad21-b39d-4d37-9421-3876a3a3707e.png)
 
-![Projects]()
+![Projects](https://user-images.githubusercontent.com/59802631/172061906-b70cf51e-c8f4-4d34-8d5a-11363ade6498.png)
 
-![Create Projects]()
+![Create Researchers](https://user-images.githubusercontent.com/59802631/172061936-c5dab42e-6c6e-45cf-9dbc-1710106a68f8.png)
 
-![Filters of Projects]()
+![Filters of Projects](https://user-images.githubusercontent.com/59802631/172061963-f533dbf9-f673-43b0-9f68-009e87de3857.png)
 
-![View of queries]()
-
+![View of query 3.5](https://user-images.githubusercontent.com/59802631/172061990-9fa4dc0b-e203-4b5d-8c8a-8bfb6d954cf4.png)
