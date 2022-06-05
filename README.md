@@ -41,7 +41,7 @@ A package named "`ELIDEK`", contains the application's code and files, separated
  - `routes.py` currently contains all the endpoints and corresponding controllers
  - `run.py` launches the simple, built-in server and runs the app on it
 
-When inside the Database, Run via the `setx FLASK_APP "Run.py"` command, to set the environment variable `FLASK_APP` to `run.py`, and then use `flask run`.
+When inside the Database, Run via the `setx FLASK_APP "app.py"` command, to set the environment variable `FLASK_APP` to `app.py`, and then use `flask run`.
 
 ## Screenshots
 
