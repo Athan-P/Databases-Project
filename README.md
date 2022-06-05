@@ -15,7 +15,6 @@ Listed alphabetically:
  - [Python](https://www.python.org/downloads/), with the additional libraries:
     - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
     - [Flask-MySQLdb](https://flask-mysqldb.readthedocs.io/en/latest/)
-    - [faker](https://faker.readthedocs.io/en/master/) (for data generation)
     - [Flask-WTForms](https://flask-wtf.readthedocs.io/en/1.0.x/)
 
 ## Creating our Database Folder
