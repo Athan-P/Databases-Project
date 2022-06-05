@@ -1,0 +1,243 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container" style = "width: 100%; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0;">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md">
+            <div class="card" id="card-container">
+                <div class="" id="card">
+                {% if Organisations|length == 0 %}
+                    <h1 style="margin-top: 5rem;">No Organisations found!</h1>
+                {% else %}
+                    <div class="table-responsive" style="width: 1900px; margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; border-color: black; align: left;" >
+                        <table class="table table-dark" style="width: 1900px; margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; border-color: black; border-radius: 10px; border: 3px #5F021F;">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Abbreviation</th>
+                                    <th>City</th>
+                                    <th>Street name</th>
+									<th>PS</th>
+									<th>Type</th>
+									<th>RF Budget MoE</th>
+									<th>RF Budget Private Sector</th>
+									<th>Company Budget</th>
+									<th>University Budget MoE</th>
+                                    <th>Update</th>
+									<th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for organisation in Organisations %}
+                                    <tr>
+                                        <td> {{ organisation.idorg }} </td>
+                                        <td> {{ organisation.Orgname }} </td>
+                                        <td> {{ organisation.Abbreviation }} </td>
+                                        <td> {{ organisation.City }} </td>
+										<td> {{ organisation.Street_name }} </td>
+										<td> {{ organisation.Postal_code }} </td>
+										<td> {{ organisation.typec }} </td>
+										<td> {{ organisation.Research_facility_Budget_MoE }} </td>
+										<td> {{ organisation.Research_facility_Budget_private_sector }} </td>
+										<td> {{ organisation.Company_Budget }} </td>
+										<td> {{ organisation.University_Budget_MoE }} </td>
+                                        <td>
+                                            <a type="button" 
+											onclick="setModalFields(this)"
+                                            data-toggle="modal" 
+											data-idorg="{{ organisation.idorg }}"
+                                            data-Orgname="{{organisation.Orgname}}"  
+											data-Abbreviation= "{{organisation.Abbreviation}}"
+                                            data-City="{{organisation.City}}" 
+											data-Street_name ="{{organisation.Street_name}}" 
+											data-Postal_code ="{{organisation.Postal_code}}" 
+											data-typec ="{{organisation.typec}}"
+											data-Research_facility_Budget_MoE ="{{organisation.Research_facility_Budget_MoE}}"
+											data-Research_facility_Budget_private_sector ="{{organisation.Research_facility_Budget_private_sector}}"
+											data-Company_Budget ="{{organisation.Company_Budget}}"
+											data-University_Budget_MoE ="{{organisation.University_Budget_MoE}}"
+											data-bs-toggle = "modal"
+                                            data-bs-target="#editModal">
+                                                <i class="fa fa-edit">Update</i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#deleteModal"
+                                            data-idorg = "{{ organisation.idorg }}" onclick = "setDeleteModalFields(this)">
+                                                <i class = "fa fa-trash">Delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit modal -->
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Organisation</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-form">
+                    {{ form.hidden_tag() }}
+                    <div style="text-align: center;">
+                        <input type="text" name="idorg" id="idorg" readonly>
+                        <!--Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                        {{ form.Orgname(id = "Orgname", required = False) }}
+                        {{ form.Abbreviation(id = "Abbreviation", required = False) }}
+                        {{ form.City(id = "City", required = False) }}
+						{{ form.Street_name(id = "Street_name", required = False) }}
+                        {{ form.Postal_code(id = "Postal_code", required = False) }}
+                        {{ form.typec(id = "typec", required = False) }}
+						{{ form.Research_facility_Budget_MoE(id = "Research_facility_Budget_MoE", required = False) }}
+						{{ form.Research_facility_Budget_private_sector(id = "Research_facility_Budget_private_sector", required = False) }}
+						{{ form.Company_Budget(id = "Company_Budget", required = False) }}
+						{{ form.University_Budget_MoE(id = "University_Budget_MoE", required = False) }}
+                    </div>
+                    <div>
+                        {% if form.Orgname.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Orgname.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.Abbreviation.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Abbreviation.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.City.errors %}
+                        <ul class = "errors">
+                            {% for error in form.City.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+						{% if form.Street_name.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Street_name.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.Postal_code.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Postal_code.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.typec.errors %}
+                        <ul class = "errors">
+                            {% for error in form.typec.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+						{% if form.Research_facility_Budget_MoE.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Research_facility_Budget_MoE.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+						{% if form.Research_facility_Budget_private_sector.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Research_facility_Budget_private_sector.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+						{% if form.Company_Budget.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Company_Budget.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+						{% if form.University_Budget_MoE.errors %}
+                        <ul class = "errors">
+                            {% for error in form.University_Budget_MoE.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                {{ form.submit(class = "btn btn btn-success", form = "modal-form", value = "Update") }}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Delete modal -->
+<div class = "modal fade" id="deleteModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Delete Organisation</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "delete-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+<script>
+    function setModalFields(row) {
+        document.getElementById("idorg").value = row.getAttribute("data-idorg");
+		document.getElementById("Orgname").value = row.getAttribute("data-Orgname");
+		document.getElementById("Abbreviation").value = row.getAttribute("data-Abbreviation");
+        document.getElementById("City").value = row.getAttribute("data-City");
+        document.getElementById("Street_name").value = row.getAttribute("data-Street_name");
+        document.getElementById("Postal_code").value = row.getAttribute("data-Postal_code");
+		document.getElementById("typec").value = row.getAttribute("data-typec");
+        document.getElementById("Research_facility_Budget_MoE").value = row.getAttribute("data-Research_facility_Budget_MoE");
+        document.getElementById("Research_facility_Budget_private_sector").value = row.getAttribute("data-Research_facility_Budget_private_sector");
+		document.getElementById("Company_Budget").value = row.getAttribute("data-Company_Budget");
+		document.getElementById("University_Budget_MoE").value = row.getAttribute("data-University_Budget_MoE");
+        document.getElementById("modal-form").action = "/Organisations/update/" + row.getAttribute("data-idorg");
+        document.getElementById("modal-form").method = "POST";
+        // document.getElementById("submit").addEventListener("click", (e) => {e.preventDefault();});
+        // commented line above would prevent the default behavior of the submit button, that is, sending the
+        // form data with a post request to the determined address and subsequently closing the pop-up
+    }
+
+    function setDeleteModalFields(row) {
+        document.getElementById("delete-modal-form").action = "/Organisations/delete/" + row.getAttribute("data-idorg");
+        document.getElementById("delete-modal-form").method = "POST";
+    }
+</script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+{% endblock content %}

@@ -1,0 +1,151 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="project-create" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
+                {{ form.hidden_tag() }}
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.Project_title.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.Project_title(class = "form-control", placeholder="Enter Project Title", required = False) }}
+                    {% if form.Project_title.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Project_title.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.Project_summary.label(class = "form-label") }}
+                    {{ form.Project_summary(class = "form-control", placeholder="Enter Project Summary", required = False) }}
+                    {% if form.Project_summary.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Project_summary.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.Project_budget.label(class = "form-label") }}
+                    {{ form.Project_budget(class = "form-control", placeholder="Enter Project Budget", required = False) }}
+                    {% if form.Project_budget.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Project_budget.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+				<div class="form-group col-sm-3 mb-3">
+                    {{ form.Project_starting.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.Project_starting(class = "form-control", placeholder="Enter Starting Date", required = False) }}
+                    {% if form.Project_starting.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Project_starting.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.Project_ending.label(class = "form-label") }}
+                    {{ form.Project_ending(class = "form-control", placeholder="Enter Ending Date", required = False) }}
+                    {% if form.Project_ending.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Project_ending.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.org_idorg.label(class = "form-label") }}
+                    {{ form.org_idorg(class = "form-control", placeholder="Enter Organisation ID", required = False) }}
+                    {% if form.org_idorg.errors %}
+                    <ul class = "errors">
+                        {% for error in form.org_idorg.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+				<div class="form-group col-sm-3 mb-3">
+                    {{ form.researcher_idresearcher.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.researcher_idresearcher(class = "form-control", placeholder="Enter Researcher ID", required = False) }}
+                    {% if form.researcher_idresearcher.errors %}
+                    <ul class = "errors">
+                        {% for error in form.researcher_idresearcher.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.Executive_idExecutive.label(class = "form-label") }}
+                    {{ form.Executive_idExecutive(class = "form-control", placeholder="Enter Executive of the Project", required = False) }}
+                    {% if form.Executive_idExecutive.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Executive_idExecutive.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.Program_idProgram.label(class = "form-label") }}
+                    {{ form.Program_idProgram(class = "form-control", placeholder="Enter Program ID", required = False) }}
+                    {% if form.Program_idProgram.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Program_idProgram.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+				<div class="form-group col-sm-3 mb-3">
+                    {{ form.researcher_ideval.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.researcher_ideval(class = "form-control", placeholder="Enter Evaluator ID", required = False) }}
+                    {% if form.researcher_ideval.errors %}
+                    <ul class = "errors">
+                        {% for error in form.researcher_ideval.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.EvalGrade.label(class = "form-label") }}
+                    {{ form.EvalGrade(class = "form-control", placeholder="Enter Evaluation Grade", required = False) }}
+                    {% if form.EvalGrade.errors %}
+                    <ul class = "errors">
+                        {% for error in form.EvalGrade.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.EvalDate.label(class = "form-label") }}
+                    {{ form.EvalDate(class = "form-control", placeholder="Enter Evaluation Date", required = False) }}
+                    {% if form.EvalDate.errors %}
+                    <ul class = "errors">
+                        {% for error in form.EvalDate.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {{ form.submit(class = "btn btn-primary btn-submit-custom") }}
+            </form>
+    </div>
+    </div>
+</div>
+{% endblock content %}

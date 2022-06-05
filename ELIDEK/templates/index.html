@@ -1,0 +1,302 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container" id="row-container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-4">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View Projects</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show all projects</p>
+                    <a class="btn btn-primary" style=" background-color: #5F021F; " id="show-btn" href="/Projects">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-4">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View Projects by Filters</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show all projects based on filters you provide</p>
+                    <a class="btn btn-primary" style=" background-color: #faa519; " id="show-btn" href="/Projects/Project_Filters">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-4">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Create Project</h4>
+                    <p class="card-text" id="paragraph">Enter a new project into the database<br></p>
+                    <a class="btn btn-primary" style=" background-color: #1973be; " id="show-btn" href="/Projects/Create">Create</a>
+                </div>
+            </div>
+        </div>
+	</div>
+	<div class="row" id="row">
+        <div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View Researchers</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show Researchers<br></p>
+                    <a class="btn btn-primary" style=" background-color: #5F021F;" id="show-btn" href="/Researchers">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Create Researcher</h4>
+                    <p class="card-text" id="paragraph">Enter a new researcher into the database<br></p>
+                    <a class="btn btn-primary" style=" background-color: #1973be; " id="show-btn" href="/Researchers/Create">Create</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View Organisations</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show all Organisations</p>
+                    <a class="btn btn-primary" style=" background-color: #5F021F; " id="show-btn" href="/Organisations">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Create Organisation</h4>
+                    <p class="card-text" id="paragraph">Enter a new organisation into the database<br></p>
+                    <a class="btn btn-primary" style=" background-color: #1973be; " id="show-btn" href="/Organisations/Create">Create</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="row" id="row">
+        
+        <div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View Programs</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show Programs<br></p>
+                    <a class="btn btn-primary" style=" background-color: #5F021F;" id="show-btn" href="/Programs">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Create Program</h4>
+                    <p class="card-text" id="paragraph">Enter a new program into the database<br></p>
+                    <a class="btn btn-primary" style=" background-color: #1973be; " id="show-btn" href="/Programs/Create">Create</a>
+                </div>
+            </div>
+        </div>
+        
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View Executives</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show all Executives</p>
+                    <a class="btn btn-primary" style=" background-color: #5F021F; " id="show-btn" href="/Executives">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Create Executive</h4>
+                    <p class="card-text" id="paragraph">Enter a new Executive into the database<br></p>
+                    <a class="btn btn-primary" style=" background-color: #1973be; " id="show-btn" href="/Executives/Create">Create</a>
+                </div>
+            </div>
+        </div>
+    </div>
+		
+	<div class="row" id="row">
+        
+        <div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View Deliverables</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show Deliverables<br></p>
+                    <a class="btn btn-primary" style=" background-color: #5F021F;" id="show-btn" href="/Deliverables">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Create deliverable</h4>
+                    <p class="card-text" id="paragraph">Enter a new deliverable into the database<br></p>
+                    <a class="btn btn-primary" style=" background-color: #1973be; " id="show-btn" href="/Deliverables/Create">Create</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View Phones</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show all Phones</p>
+                    <a class="btn btn-primary" style=" background-color: #5F021F; " id="show-btn" href="/Phones">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Create Phone</h4>
+                    <p class="card-text" id="paragraph">Enter a new Phone into the database<br></p>
+                    <a class="btn btn-primary" style=" background-color: #1973be; " id="show-btn" href="/Phones/Create">Create</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+	
+	<div class="row" id="row">
+        <div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View Scientific Domains</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show ScientificDomains<br></p>
+                    <a class="btn btn-primary" style=" background-color: #5F021F;" id="show-btn" href="/ScientificDomains">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Create Scientific Domain</h4>
+                    <p class="card-text" id="paragraph">Enter a new Scientific Domain into the database<br></p>
+                    <a class="btn btn-primary" style=" background-color: #1973be; " id="show-btn" href="/ScientificDomains/Create">Create</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View Works</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show all Works</p>
+                    <a class="btn btn-primary" style=" background-color: #5F021F; " id="show-btn" href="/Works">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Create Work</h4>
+                    <p class="card-text" id="paragraph">Enter a new Work into the database<br></p>
+                    <a class="btn btn-primary" style=" background-color: #1973be; " id="show-btn" href="/Works/Create">Create</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="row" id="row">
+		<div class="col-md-3">
+            
+        </div>
+        <div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View What domains Projects Have</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show Project Has Domains<br></p>
+                    <a class="btn btn-primary" style=" background-color: #5F021F;" id="show-btn" href="/ProjectHasDomains">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">Add domains to a project</h4>
+                    <p class="card-text" id="paragraph">Enter a new domain for a Project into the database<br></p>
+                    <a class="btn btn-primary" style=" background-color: #1973be; " id="show-btn" href="/ProjectHasDomains/Create">Create</a>
+                </div>
+            </div>
+        </div>
+		
+    </div>
+	
+	<div class="row" id="row">
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View 3.3</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show 3.3<br></p>
+                    <a class="btn btn-primary" style=" background-color: #69cd28;" id="show-btn" href="/Get33">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View What Researchers are in what Projects Have</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show Researchers and Projects<br></p>
+                    <a class="btn btn-primary" style=" background-color: #faa519;" id="show-btn" href="/ViewProjRes">Show</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View What Researchers are in what Organisations Have</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show Researchers and Organisations<br></p>
+                    <a class="btn btn-primary" style=" background-color: #faa519;" id="show-btn" href="/ViewResOrg">Show</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View 3.4</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show 3.4<br></p>
+                    <a class="btn btn-primary" style=" background-color: #69cd28;" id="show-btn" href="/Get34">Show</a>
+                </div>
+            </div>
+        </div>
+		
+	</div>
+	<div class="row" id="row">
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View 3.5</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show 3.5<br></p>
+                    <a class="btn btn-primary" style=" background-color: #69cd28;" id="show-btn" href="/Get35">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View 3.6</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show 3.6<br></p>
+                    <a class="btn btn-primary" style=" background-color: #69cd28;" id="show-btn" href="/Get36">Show</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View 3.7</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show 3.7<br></p>
+                    <a class="btn btn-primary" style=" background-color: #69cd28;" id="show-btn" href="/Get37">Show</a>
+                </div>
+            </div>
+        </div>
+		<div class="col-md-3">
+            <div class="card" id="card-container-layout">
+                <div class="card-body" id="card">
+                    <h4 class="card-title">View 3.8</h4>
+                    <p class="card-text" id="paragraph">Simple Query to database to show 3.8<br></p>
+                    <a class="btn btn-primary" style=" background-color: #69cd28;" id="show-btn" href="/Get38">Show</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="row-2">
+        
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,195 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container" style = "width: 100%; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0;">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md">
+            <div class="card" id="card-container">
+                <div class="" id="card">
+                {% if Researchers|length == 0 %}
+                    <h1 style="margin-top: 5rem;">No Researchers found!</h1>
+                {% else %}
+                    <div class="table-responsive" style="width: 1900px; margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; border-color: black; align: left;" >
+                        <table class="table table-dark" style="width: 1900px; margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; border-color: black; border-radius: 10px; border: 3px #5F021F;">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Gender</th>
+                                    <th>Date of Birth</th>
+									<th>Hire Day</th>
+									<th>Organisation ID</th>
+                                    <th>Update</th>
+									<th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for researcher in Researchers %}
+                                    <tr>
+                                        <td> {{ researcher.idresearcher }} </td>
+                                        <td> {{ researcher.Researcher_name }} </td>
+                                        <td> {{ researcher.Researcher_surname }} </td>
+                                        <td> {{ researcher.Researcher_gender }} </td>
+										<td> {{ researcher.researcher_date_of_birth }} </td>
+										<td> {{ researcher.researcher_hire_date }} </td>
+										<td> {{ researcher.org_idorg }} </td>
+                                        <td>
+                                            <a type="button" 
+											onclick="setModalFields(this)"
+                                            data-toggle="modal" 
+											data-idresearcher="{{ researcher.idresearcher }}"
+                                            data-Researcher_name="{{researcher.Researcher_name}}"  
+											data-Researcher_surname= "{{researcher.Researcher_surname}}"
+                                            data-Researcher_gender="{{researcher.Researcher_gender}}" 
+											data-researcher_date_of_birth ="{{researcher.researcher_date_of_birth}}" 
+											data-researcher_hire_date ="{{researcher.researcher_hire_date}}" 
+											data-org_idorg ="{{researcher.org_idorg}}" 
+											data-bs-toggle = "modal"
+                                            data-bs-target="#editModal">
+                                                <i class="fa fa-edit">Update</i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#deleteModal"
+                                            data-idresearcher = "{{ researcher.idresearcher }}" onclick = "setDeleteModalFields(this)">
+                                                <i class = "fa fa-trash">Delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit modal -->
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Researcher</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-form">
+                    {{ form.hidden_tag() }}
+                    <div style="text-align: center;">
+                        <input type="text" name="idresearcher" id="idresearcher" readonly>
+                        <!--Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                        {{ form.Researcher_name(id = "Researcher_name", required = False) }}
+                        {{ form.Researcher_surname(id = "Researcher_surname", required = False) }}
+                        {{ form.Researcher_gender(id = "Researcher_gender", required = False) }}
+						{{ form.researcher_date_of_birth(id = "researcher_date_of_birth", required = False) }}
+                        {{ form.researcher_hire_date(id = "researcher_hire_date", required = False) }}
+                        {{ form.org_idorg(id = "org_idorg", required = False) }}
+                    </div>
+                    <div>
+                        {% if form.Researcher_name.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Researcher_name.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.Researcher_surname.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Researcher_surname.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.Researcher_gender.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Researcher_gender.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+						{% if form.researcher_date_of_birth.errors %}
+                        <ul class = "errors">
+                            {% for error in form.researcher_date_of_birth.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.researcher_hire_date.errors %}
+                        <ul class = "errors">
+                            {% for error in form.researcher_hire_date.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.org_idorg.errors %}
+                        <ul class = "errors">
+                            {% for error in form.org_idorg.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                {{ form.submit(class = "btn btn btn-success", form = "modal-form", value = "Update") }}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Delete modal -->
+<div class = "modal fade" id="deleteModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Delete Researcher</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "delete-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+<script>
+    function setModalFields(row) {
+        document.getElementById("idresearcher").value = row.getAttribute("data-idresearcher");
+        document.getElementById("Researcher_name").value = row.getAttribute("data-Researcher_name");
+        document.getElementById("Researcher_surname").value = row.getAttribute("data-Researcher_surname");
+        document.getElementById("Researcher_gender").value = row.getAttribute("data-Researcher_gender");
+		document.getElementById("researcher_date_of_birth").value = row.getAttribute("data-researcher_date_of_birth");
+        document.getElementById("researcher_hire_date").value = row.getAttribute("data-researcher_hire_date");
+        document.getElementById("org_idorg").value = row.getAttribute("data-org_idorg");
+        document.getElementById("modal-form").action = "/Researchers/update/" + row.getAttribute("data-idresearcher");
+        document.getElementById("modal-form").method = "POST";
+        // document.getElementById("submit").addEventListener("click", (e) => {e.preventDefault();});
+        // commented line above would prevent the default behavior of the submit button, that is, sending the
+        // form data with a post request to the determined address and subsequently closing the pop-up
+    }
+
+    function setDeleteModalFields(row) {
+        document.getElementById("delete-modal-form").action = "/Researchers/delete/" + row.getAttribute("data-idresearcher");
+        document.getElementById("delete-modal-form").method = "POST";
+    }
+</script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+{% endblock content %}

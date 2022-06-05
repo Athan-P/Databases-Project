@@ -1,0 +1,44 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container" style = "width: 100%; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0;">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md">
+            <div class="card" id="card-container">
+                <div class="" id="card">
+                {% if ResOrgs|length == 0 %}
+                    <h1 style="margin-top: 5rem;">No Researchers for Organisations found!</h1>
+                {% else %}
+                    <div class="table-responsive" style="width: 1900px; margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; border-color: black; align: left; overlow: auto;" >
+                        <table class="table table-dark" style="width: 1900px; margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; border-color: black; border-radius: 10px; border: 3px #5F021F;">
+                            <thead>
+                                <tr>
+                                    <th>Researcher ID</th>
+                                    <th>Full Name</th>
+                                    <th>Organisation ID</th>
+									<th>Organisation Name</th>
+                                    <th>Abbreviation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for project in ResOrgs %}
+                                    <tr>
+                                        <td> {{ project.idresearcher }} </td>
+                                        <td> {{ project.Full_name }} </td>
+                                        <td> {{ project.idorg }} </td>
+                                        <td> {{ project.Orgname }} </td>
+										<td> {{ project.Abbreviation }} </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+{% endblock content %}

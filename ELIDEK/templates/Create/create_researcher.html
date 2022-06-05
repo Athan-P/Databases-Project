@@ -1,0 +1,83 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="project-create" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
+                {{ form.hidden_tag() }}
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.Researcher_name.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.Researcher_name(class = "form-control", placeholder="Enter Researcher Name", required = False) }}
+                    {% if form.Researcher_name.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Researcher_name.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.Researcher_surname.label(class = "form-label") }}
+                    {{ form.Researcher_surname(class = "form-control", placeholder="Enter Researcher Surname", required = False) }}
+                    {% if form.Researcher_surname.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Researcher_surname.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.Researcher_gender.label(class = "form-label") }}
+                    {{ form.Researcher_gender(class = "form-control", placeholder="Enter Researcher Gender (M,F or NB)", required = False) }}
+                    {% if form.Researcher_gender.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Researcher_gender.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+				<div class="form-group col-sm-3 mb-3">
+                    {{ form.researcher_date_of_birth.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.researcher_date_of_birth(class = "form-control", placeholder="Enter Date of Birth", required = False) }}
+                    {% if form.researcher_date_of_birth.errors %}
+                    <ul class = "errors">
+                        {% for error in form.researcher_date_of_birth.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.researcher_hire_date.label(class = "form-label") }}
+                    {{ form.researcher_hire_date(class = "form-control", placeholder="Enter Hire Date", required = False) }}
+                    {% if form.researcher_hire_date.errors %}
+                    <ul class = "errors">
+                        {% for error in form.researcher_hire_date.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.org_idorg.label(class = "form-label") }}
+                    {{ form.org_idorg(class = "form-control", placeholder="Enter Organisation ID", required = False) }}
+                    {% if form.org_idorg.errors %}
+                    <ul class = "errors">
+                        {% for error in form.org_idorg.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {{ form.submit(class = "btn btn-primary btn-submit-custom") }}
+            </form>
+    </div>
+    </div>
+</div>
+{% endblock content %}

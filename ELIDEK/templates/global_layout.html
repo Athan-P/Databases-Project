@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+    <meta charset = "utf-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>
+        {% block title %}
+        {% endblock title %}
+	</title>
+    <!-- DEPENDENCIES -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../static/css/styles.css" />
+	<link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/bootstrap.min.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/styles.css') }}">
+    <script src="{{ url_for('static', filename = 'JS/jquery.min.js') }}"></script>
+ </head>
+  {% include "navbar.html" %}
+
+<body>
+    <!-- all other templates are to be rendered "within" the following block -->
+    {% block content %}
+    {% endblock content %}
+
+    <script src = "{{ url_for('static', filename = 'bootstrap/js/bootstrap.min.js') }}"></script>
+</body>
+
+</html>

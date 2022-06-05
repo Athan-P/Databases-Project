@@ -1,0 +1,267 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container" style = "width: 100%; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0;">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md">
+            <div class="card" id="card-container">
+                <div class="" id="card">
+                {% if Projects|length == 0 %}
+                    <h1 style="margin-top: 5rem;">No Projects found!</h1>
+                {% else %}
+                    <div class="table-responsive" style="width: 1900px; margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; border-color: black; align: left; overlow: auto;" >
+                        <table class="table table-dark" style="width: 1900px; margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; border-color: black; border-radius: 10px; border: 3px #5F021F;">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th style = "width: 400px;">Summary</th>
+									<th>Budget</th>
+                                    <th>Starting Date</th>
+                                    <th>Ending Date</th>
+									<th>Organisation ID</th>
+									<th>Manager ID</th>
+									<th>Executive ID</th>
+									<th>Program</th>
+									<th>Evaluator ID</th>
+									<th>Grade from Evaluation</th>
+									<th>Date of Evaluation</th>
+                                    <th>Update</th>
+									<th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for project in Projects %}
+                                    <tr>
+                                        <td> {{ project.idProject }} </td>
+                                        <td> {{ project.Project_title }} </td>
+                                        <td> {{ project.Project_summary }} </td>
+                                        <td> {{ project.Project_budget }} </td>
+										<td> {{ project.Project_starting }} </td>
+										<td> {{ project.Project_ending }} </td>
+										<td> {{ project.org_idorg }} </td>
+										<td> {{ project.researcher_idresearcher }} </td>
+										<td> {{ project.Executive_idExecutive }} </td>
+										<td> {{ project.Program_idProgram }} </td>
+										<td> {{ project.researcher_ideval }} </td>
+										<td> {{ project.EvalGrade }} </td>
+										<td> {{ project.EvalDate }} </td>
+                                        <td>
+                                            <a type="button" 
+											onclick="setModalFields(this)"
+                                            data-toggle="modal" 
+											data-idProject="{{ project.idProject }}"
+                                            data-Project_title="{{project.Project_title}}"  
+											data-Project_summary= "{{project.Project_summary}}"
+                                            data-Project_budget="{{project.Project_budget}}" 
+											data-Project_starting ="{{project.Project_starting}}" 
+											data-Project_ending ="{{project.Project_ending}}" 
+											data-org_idorg ="{{project.org_idorg}}" 
+											data-researcher_idresearcher ="{{project.researcher_idresearcher}}" 
+											data-Executive_idExecutive ="{{project.Executive_idExecutive}}" 
+											data-Program_idProgram ="{{project.Program_idProgram}}" 
+											data-researcher_ideval ="{{project.researcher_ideval}}" 
+											data-EvalGrade ="{{project.EvalGrade}}" 
+											data-EvalDate ="{{project.EvalDate}}" 
+											data-bs-toggle = "modal"
+                                            data-bs-target="#editModal">
+                                                <i class="fa fa-edit">Update</i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#deleteModal"
+                                            data-idProject = "{{ project.idProject }}" onclick = "setDeleteModalFields(this)">
+                                                <i class = "fa fa-trash">Delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit modal -->
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Project</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-form">
+                    {{ form.hidden_tag() }}
+                    <div style="text-align: center;">
+                        <input type="text" name="idProject" id="idProject" readonly>
+                        <!--Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                        {{ form.Project_title(id = "Project_title", required = False) }}
+                        {{ form.Project_summary(id = "Project_summary", required = False) }}
+                        {{ form.Project_budget(id = "Project_budget", required = False) }}
+						{{ form.Project_starting(id = "Project_starting", required = False) }}
+                        {{ form.Project_ending(id = "Project_ending", required = False) }}
+                        {{ form.org_idorg(id = "org_idorg", required = False) }}
+						{{ form.researcher_idresearcher(id = "researcher_idresearcher", required = False) }}
+                        {{ form.Executive_idExecutive(id = "Executive_idExecutive", required = False) }}
+                        {{ form.Program_idProgram(id = "Program_idProgram", required = False) }}
+						{{ form.researcher_ideval(id = "researcher_ideval", required = False) }}
+                        {{ form.EvalGrade(id = "EvalGrade", required = False) }}
+                        {{ form.EvalDate(id = "EvalDate", required = False) }}
+                    </div>
+                    <div>
+                        {% if form.Project_title.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Project_title.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.Project_summary.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Project_summary.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.Project_budget.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Project_budget.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+						{% if form.Project_starting.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Project_starting.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.Project_ending.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Project_ending.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.org_idorg.errors %}
+                        <ul class = "errors">
+                            {% for error in form.org_idorg.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+						{% if form.researcher_idresearcher.errors %}
+                        <ul class = "errors">
+                            {% for error in form.researcher_idresearcher.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.Executive_idExecutive.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Executive_idExecutive.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.Program_idProgram.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Program_idProgram.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+						{% if form.researcher_ideval.errors %}
+                        <ul class = "errors">
+                            {% for error in form.researcher_ideval.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.EvalGrade.errors %}
+                        <ul class = "errors">
+                            {% for error in form.EvalGrade.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.EvalDate.errors %}
+                        <ul class = "errors">
+                            {% for error in form.EvalDate.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                {{ form.submit(class = "btn btn btn-success", form = "modal-form", value = "Update") }}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Delete modal -->
+<div class = "modal fade" id="deleteModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Delete Project</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "delete-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+<script>
+    function setModalFields(row) {
+        document.getElementById("idProject").value = row.getAttribute("data-idProject");
+        document.getElementById("Project_title").value = row.getAttribute("data-Project_title");
+        document.getElementById("Project_summary").value = row.getAttribute("data-Project_summary");
+        document.getElementById("Project_budget").value = row.getAttribute("data-Project_budget");
+		document.getElementById("Project_starting").value = row.getAttribute("data-Project_starting");
+        document.getElementById("Project_ending").value = row.getAttribute("data-Project_ending");
+        document.getElementById("org_idorg").value = row.getAttribute("data-org_idorg");
+		document.getElementById("researcher_idresearcher").value = row.getAttribute("data-researcher_idresearcher");
+        document.getElementById("Executive_idExecutive").value = row.getAttribute("data-Executive_idExecutive");
+        document.getElementById("Program_idProgram").value = row.getAttribute("data-Program_idProgram");
+		document.getElementById("researcher_ideval").value = row.getAttribute("data-researcher_ideval");
+        document.getElementById("EvalGrade").value = row.getAttribute("data-EvalGrade");
+        document.getElementById("EvalDate").value = row.getAttribute("data-EvalDate");
+        document.getElementById("modal-form").action = "/Projects/update/" + row.getAttribute("data-idProject");
+        document.getElementById("modal-form").method = "POST";
+        // document.getElementById("submit").addEventListener("click", (e) => {e.preventDefault();});
+        // commented line above would prevent the default behavior of the submit button, that is, sending the
+        // form data with a post request to the determined address and subsequently closing the pop-up
+    }
+
+    function setDeleteModalFields(row) {
+        document.getElementById("delete-modal-form").action = "/Projects/delete/" + row.getAttribute("data-idProject");
+        document.getElementById("delete-modal-form").method = "POST";
+    }
+</script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+{% endblock content %}

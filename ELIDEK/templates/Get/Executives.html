@@ -1,0 +1,135 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container" style = "width: 100%; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0;">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md">
+            <div class="card" id="card-container">
+                <div class="" id="card">
+                {% if Executives|length == 0 %}
+                    <h1 style="margin-top: 5rem;">No Executives found!</h1>
+                {% else %}
+                    <div class="table-responsive" style="width: 1900px; margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; border-color: black; align: left;" >
+                        <table class="table table-dark" style="width: 1900px; margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; border-color: black; border-radius: 10px; border: 3px #5F021F;">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Executive Name</th>
+                                    <th>Update</th>
+									<th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for executive in Executives %}
+                                    <tr>
+                                        <td> {{ executive.idExecutive }} </td>
+                                        <td> {{ executive.Executive_name }} </td>
+                                        <td>
+                                            <a type="button" 
+											onclick="setModalFields(this)"
+                                            data-toggle="modal" 
+											data-idExecutive="{{ executive.idExecutive }}"
+                                            data-Executive_name="{{executive.Executive_name}}" 
+											data-bs-toggle = "modal"
+                                            data-bs-target="#editModal">
+                                                <i class="fa fa-edit">Update</i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#deleteModal"
+                                            data-idExecutive = "{{ executive.idExecutive }}" onclick = "setDeleteModalFields(this)">
+                                                <i class = "fa fa-trash">Delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit modal -->
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Executive</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-form">
+                    {{ form.hidden_tag() }}
+                    <div style="text-align: center;">
+                        <input type="text" name="idExecutive" id="idExecutive" readonly>
+                        <!--Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                        {{ form.Executive_name(id = "Executive_name", required = False) }}
+                    </div>
+                    <div>
+                        {% if form.Executive_name.errors %}
+                        <ul class = "errors">
+                            {% for error in form.Executive_name.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                {{ form.submit(class = "btn btn btn-success", form = "modal-form", value = "Update") }}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Delete modal -->
+<div class = "modal fade" id="deleteModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Delete Executive</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "delete-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+<script>
+    function setModalFields(row) {
+        document.getElementById("idExecutive").value = row.getAttribute("data-idExecutive");
+        document.getElementById("Executive_name").value = row.getAttribute("data-Executive_name");
+        document.getElementById("modal-form").action = "/Executives/update/" + row.getAttribute("data-idExecutive");
+        document.getElementById("modal-form").method = "POST";
+        // document.getElementById("submit").addEventListener("click", (e) => {e.preventDefault();});
+        // commented line above would prevent the default behavior of the submit button, that is, sending the
+        // form data with a post request to the determined address and subsequently closing the pop-up
+    }
+
+    function setDeleteModalFields(row) {
+        document.getElementById("delete-modal-form").action = "/Executives/delete/" + row.getAttribute("data-idExecutive");
+        document.getElementById("delete-modal-form").method = "POST";
+    }
+</script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+{% endblock content %}

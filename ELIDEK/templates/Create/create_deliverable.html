@@ -1,0 +1,61 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="project-create" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
+                {{ form.hidden_tag() }}
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.Deliverable_title.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.Deliverable_title(class = "form-control", placeholder="Enter Deliverable Title", required = False) }}
+                    {% if form.Deliverable_title.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Deliverable_title.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.Deliverable_summary.label(class = "form-label") }}
+                    {{ form.Deliverable_summary(class = "form-control", placeholder="Enter Deliverable summary", required = False) }}
+                    {% if form.Deliverable_summary.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Deliverable_summary.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.Deliverable_date.label(class = "form-label") }}
+                    {{ form.Deliverable_date(class = "form-control", placeholder="Enter Deliverable date", required = False) }}
+                    {% if form.Deliverable_date.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Deliverable_date.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+				<div class="form-group col-sm-3 mb-3">
+                    {{ form.Project_idProject.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.Project_idProject(class = "form-control", placeholder="Enter Project ID", required = False) }}
+                    {% if form.Project_idProject.errors %}
+                    <ul class = "errors">
+                        {% for error in form.Project_idProject.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {{ form.submit(class = "btn btn-primary btn-submit-custom") }}
+            </form>
+    </div>
+    </div>
+</div>
+{% endblock content %}
