@@ -3,15 +3,6 @@ from flask_mysqldb import MySQL
 from ELIDEK import app, db ## initially created by __init__.py, need to be used here
 from ELIDEK.forms import ProjectCreate, ResearcherCreate, OrganisationCreate, ExecutiveCreate, ProgramCreate, Scientific_DomainCreate, DeliverableCreate, ProjectUpdate, ResearcherUpdate, OrganisationUpdate, ExecutiveUpdate, ProgramUpdate, Scientific_DomainUpdate, DeliverableUpdate, ProjectFilter, PhoneCreate, WorksCreate, ProjectHasDomainCreate, PhoneUpdate, WorksUpdate, ProjectHasDomainUpdate, ProjResCreate, ResOrgCreate, Get33, Get34, Get35, Get36, Get37, Get38
 
-"""
-@app.route('/', methods=['GET', 'POST'])
-def dropdown():
-	Pages = Pages()
-	Pages.Page_Name = ['Landing', 'Projects', 'Create Projects', 'Researchers']
-	Pages.URL = ['/', '/Projects', '/Projects/Create', '/Researchers']
-	return render_template('navbar.html', Pages=Pages)
-"""
-
 @app.route("/")
 def index():
     try:
@@ -121,24 +112,27 @@ def getViewResOrg():
 
 #3.3=============================================================================
 
-@app.route("/Get33")
-def get33():
+@app.route("/Get33" , methods = ["GET", "POST"])
+def get33(Scientific_domain_Scientific_domain_name = 'Law'):
     """
     #Retrieve 3.3 from database
     """
-    try:
-        form = Get33()
-        cur = db.connection.cursor()
-        cur.execute("select  s.Scientific_domain_Scientific_domain_name,p.idProject,p.Project_starting,p.researcher_idresearcher,p.Project_ending,r.idresearcher,r.Researcher_name,r.Researcher_surname from Project_has_Scientific_domain s inner join Project p on s.Project_idProject=p.idProject inner join works w on w.Project_idProject=p.idProject inner join researcher r on r.idresearcher=w.researcher_idresearcher  where s.Scientific_domain_Scientific_domain_name='Law' and p.Project_starting<curdate() and p.Project_ending>curdate() union select s.Scientific_domain_Scientific_domain_name,p.idProject,p.Project_starting,p.researcher_idresearcher,p.Project_ending,r.idresearcher,r.Researcher_name,r.Researcher_surname from Project_has_Scientific_domain s inner join Project p on s.Project_idProject=p.idProject inner join researcher r on r.idresearcher=p.researcher_idresearcher where s.Scientific_domain_Scientific_domain_name='Law' and p.Project_starting<curdate() and p.Project_ending>curdate() order by idProject;")
-        column_names = [i[0] for i in cur.description]
-        Get33s = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
-        cur.close()
-        return render_template("Queries/Get33.html", Get33s = Get33s, pageTitle = "View 3.3 Page", form = form)
-    except Exception as e:
-        ## if the connection to the database fails, return HTTP response 500
-        flash(str(e), "danger")
-        abort(500)
- 
+    form = Get33()
+    if(request.method == "POST"):
+        new = form.__dict__
+        Scientific_domain_Scientific_domain_name = new['Scientific_domain_Scientific_domain_name'].data
+        try:
+            cur = db.connection.cursor()
+            cur.execute("select  s.Scientific_domain_Scientific_domain_name,p.idProject,p.Project_starting,p.researcher_idresearcher,p.Project_ending,r.idresearcher,r.Researcher_name,r.Researcher_surname from Project_has_Scientific_domain s inner join Project p on s.Project_idProject=p.idProject inner join works w on w.Project_idProject=p.idProject inner join researcher r on r.idresearcher=w.researcher_idresearcher  where s.Scientific_domain_Scientific_domain_name='{}' and p.Project_starting<curdate() and p.Project_ending>curdate() union select s.Scientific_domain_Scientific_domain_name,p.idProject,p.Project_starting,p.researcher_idresearcher,p.Project_ending,r.idresearcher,r.Researcher_name,r.Researcher_surname from Project_has_Scientific_domain s inner join Project p on s.Project_idProject=p.idProject inner join researcher r on r.idresearcher=p.researcher_idresearcher where s.Scientific_domain_Scientific_domain_name='{}' and p.Project_starting<curdate() and p.Project_ending>curdate() order by idProject;".format(Scientific_domain_Scientific_domain_name, Scientific_domain_Scientific_domain_name))
+            column_names = [i[0] for i in cur.description]
+            Get33s = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
+            cur.close()
+            return render_template("Queries/Get33.html", Get33s = Get33s, pageTitle = "View 3.3 Page", form = form)
+        except Exception as e:
+            ## if the connection to the database fails, return HTTP response 500
+            flash(str(e), "danger")
+            abort(500)
+    return render_template("ScieDomChoose.html", pageTitle = "Choose Scientific Domain Page", form = form)
 
 #3.4=============================================================================
 
@@ -235,7 +229,7 @@ def get38():
     try:
         form = Get38()
         cur = db.connection.cursor()
-        cur.execute("select * from (SELECT CONCAT(l.researcher_name + " " + l.researcher_surname) as Full_name, l.idresearcher, count(distinct l.idProject) as cnt FROM ((SELECT r.idresearcher,r.researcher_name,r.researcher_surname,p.idProject from  works w INNER JOIN researcher r ON r.idresearcher = w.researcher_idresearcher INNER JOIN Project p ON p.idProject = w.Project_idProject WHERE p.idProject not in (select d.Project_idProject from Deliverable d)) union (select r.idresearcher,r.researcher_name,r.researcher_surname,p.idProject from Project p inner join researcher r on r.idresearcher=p.researcher_idresearcher  WHERE p.idProject not in (select d.Project_idProject from Deliverable d))) l GROUP BY l.idresearcher,l.researcher_name,l.researcher_surname) m where m.cnt>=5;")
+        cur.execute("select * from (SELECT CONCAT(l.researcher_name , ' ' , l.researcher_surname) as Full_name, l.idresearcher, count(distinct l.idProject) as cnt FROM ((SELECT r.idresearcher,r.researcher_name,r.researcher_surname,p.idProject from  works w INNER JOIN researcher r ON r.idresearcher = w.researcher_idresearcher INNER JOIN Project p ON p.idProject = w.Project_idProject WHERE p.idProject not in (select d.Project_idProject from Deliverable d)) union (select r.idresearcher,r.researcher_name,r.researcher_surname,p.idProject from Project p inner join researcher r on r.idresearcher=p.researcher_idresearcher  WHERE p.idProject not in (select d.Project_idProject from Deliverable d))) l GROUP BY l.idresearcher,l.researcher_name,l.researcher_surname) m where m.cnt>=5;")
         column_names = [i[0] for i in cur.description]
         Get38s = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
         cur.close()
@@ -245,6 +239,15 @@ def get38():
         flash(str(e), "danger")
         abort(500)
 
+
+
+#CRUD===========================================================================
+#===============================================================================
+#===============================================================================
+#===============================================================================
+#===============================================================================
+#===============================================================================
+#===============================================================================
 
 
 #Projects=========================================================================
@@ -277,10 +280,12 @@ def createProject():
     """
     form = ProjectCreate()
     ## when the form is submitted
-    if(request.method == "POST" and form.validate_on_submit()):
+    if(request.method == "POST"):
+        print(1)
         newProject = form.__dict__
-        query = "INSERT INTO Project(Project_title, Project_summary, Project_budget, Project_starting, Project_ending, org_idorg, researcher_idresearcher, Executive_idExecutive, Program_idProgram, researcher_ideval, EvalGrade, EvalDate) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(newProject['Project_title'].data, newProject['Project_summary'].data, newProject['Project_budget'].data, newProject['Project_starting'].data, newProject['Project_ending'].data, newProject['org_idorg'].data, newProject['researcher_idresearcher'].data, newProject['Executive_idExecutive'].data, newProject['Program_idProgram'].data, newProject['researcher_ideval'].data, newProject['EvalGrade'].data, newProject['EvalDate'].data)
+        query = "INSERT INTO project(Project_title, Project_summary, Project_starting, Project_ending, Project_budget, org_idorg, researcher_idresearcher, Executive_idExecutive, Program_idProgram, researcher_ideval, EvalGrade, EvalDate) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(newProject['Project_title'].data, newProject['Project_summary'].data, newProject['Project_starting'].data, newProject['Project_ending'].data, newProject['Project_budget'].data, newProject['org_idorg'].data, newProject['researcher_idresearcher'].data, newProject['Executive_idExecutive'].data, newProject['Program_idProgram'].data, newProject['researcher_ideval'].data, newProject['EvalGrade'].data, newProject['EvalDate'].data)
         try:
+            print(2)
             cur = db.connection.cursor()
             cur.execute(query)
             db.connection.commit()
@@ -303,7 +308,7 @@ def updateProject(idProject):
     form = ProjectUpdate()
     updateData = form.__dict__
     if(form.validate_on_submit()):
-        query = "UPDATE project SET Project_title = '{}', Project_summary = '{}', Project_starting = '{}', Project_ending = '{}', Project_budget = '{}', org_idorg = '{}', researcher_idresearcher = '{}', Executive_idExecutive = '{}', Program_idProgram = '{}', researcher_ideval = '{}', EvalGrade = '{}, EvalDate = '{}' WHERE idProject = {};".format(updateData['Project_title'].data, updateData['Project_summary'].data, updateData['Project_budget'].data, updateData['Project_starting'].data, updateData['Project_ending'].data, updateData['org_idorg'].data, updateData['researcher_idresearcher'].data, updateData['Executive_idExecutive'].data, updateData['Program_idProgram'].data, updateData['researcher_ideval'].data, updateData['EvalGrade'].data, updateData['EvalDate'].data,  idProject)
+        query = "UPDATE project SET Project_title = '{}', Project_summary = '{}', Project_starting = '{}', Project_ending = '{}', Project_budget = '{}', org_idorg = '{}', researcher_idresearcher = '{}', Executive_idExecutive = '{}', Program_idProgram = '{}', researcher_ideval = '{}', EvalGrade = '{}', EvalDate = '{}' WHERE idProject = '{}';".format(updateData['Project_title'].data, updateData['Project_summary'].data, updateData['Project_starting'].data, updateData['Project_ending'].data, updateData['Project_budget'].data, updateData['org_idorg'].data, updateData['researcher_idresearcher'].data, updateData['Executive_idExecutive'].data, updateData['Program_idProgram'].data, updateData['researcher_ideval'].data, updateData['EvalGrade'].data, updateData['EvalDate'].data,  idProject)
         try:
             cur = db.connection.cursor()
             cur.execute(query)
@@ -365,7 +370,7 @@ def createResearcher():
     """
     form = ResearcherCreate()
     ## when the form is submitted
-    if(request.method == "POST" and form.validate_on_submit()):
+    if(request.method == "POST"):
         newResearcher = form.__dict__
         query = "INSERT INTO researcher(Researcher_name, Researcher_surname, Researcher_gender, researcher_date_of_birth, researcher_hire_date, org_idorg) VALUES ('{}', '{}', '{}', '{}', '{}', '{}');".format(newResearcher['Researcher_name'].data, newResearcher['Researcher_surname'].data, newResearcher['Researcher_gender'].data, newResearcher['researcher_date_of_birth'].data, newResearcher['researcher_hire_date'].data, newResearcher['org_idorg'].data)
         try:
@@ -450,7 +455,7 @@ def createOrganisation():
     """
     form = OrganisationCreate()
     ## when the form is submitted
-    if(request.method == "POST" and form.validate_on_submit()):
+    if(request.method == "POST"):
         newOrganisation = form.__dict__
         query = "INSERT INTO org(Orgname, Abbreviation, City, Street_name, Postal_code, typec, Research_facility_Budget_MoE, Research_facility_Budget_private_sector, Company_Budget, University_Budget_MoE) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(newOrganisation['Orgname'].data, newOrganisation['Abbreviation'].data, newOrganisation['City'].data, newOrganisation['Street_name'].data, newOrganisation['Postal_code'].data, newOrganisation['typec'].data, newOrganisation['Research_facility_Budget_MoE'].data, newOrganisation['Research_facility_Budget_private_sector'].data, newOrganisation['Company_Budget'].data, newOrganisation['University_Budget_MoE'].data)
         try:
@@ -536,7 +541,7 @@ def createProgram():
     """
     form = ProgramCreate()
     ## when the form is submitted
-    if(request.method == "POST" and form.validate_on_submit()):
+    if(request.method == "POST"):
         newProgram = form.__dict__
         query = "INSERT INTO program(Program_name, Program_dept) VALUES ('{}', '{}');".format(newProgram['Program_name'].data, newProgram['Program_dept'].data)
         try:
@@ -622,7 +627,7 @@ def createExecutive():
     """
     form = ExecutiveCreate()
     ## when the form is submitted
-    if(request.method == "POST" and form.validate_on_submit()):
+    if(request.method == "POST"):
         newExecutive = form.__dict__
         query = "INSERT INTO executive(Executive_name) VALUES ('{}');".format(newExecutive['Executive_name'].data)
         try:
@@ -707,7 +712,7 @@ def createDeliverable():
     """
     form = DeliverableCreate()
     ## when the form is submitted
-    if(request.method == "POST" and form.validate_on_submit()):
+    if(request.method == "POST"):
         newDeliverable = form.__dict__
         query = "INSERT INTO deliverable(Deliverable_title, Deliverable_summary, Deliverable_date, Project_idProject) VALUES ('{}', '{}', '{}','{}');".format(newDeliverable['Deliverable_title'].data, newDeliverable['Deliverable_summary'].data, newDeliverable['Deliverable_date'].data, newDeliverable['Project_idProject'].data)
         try:
@@ -792,7 +797,7 @@ def createPhone():
     """
     form = PhoneCreate()
     ## when the form is submitted
-    if(request.method == "POST" and form.validate_on_submit()):
+    if(request.method == "POST"):
         newPhone = form.__dict__
         query = "INSERT INTO phone(Phone_number, org_idorg) VALUES ('{}', '{}');".format(newPhone['Phone_number'].data, newPhone['org_idorg'].data)
         try:
@@ -800,7 +805,7 @@ def createPhone():
             cur.execute(query)
             db.connection.commit()
             cur.close()
-            flash("Deliverable inserted successfully", "success")
+            flash("Phone inserted successfully", "success")
             return redirect(url_for("index"))
         except Exception as e: ## OperationalError
             flash(str(e), "danger")
@@ -878,7 +883,7 @@ def createScientific_Domain():
     """
     form = Scientific_DomainCreate()
     ## when the form is submitted
-    if(request.method == "POST" and form.validate_on_submit()):
+    if(request.method == "POST"):
         newScientific_Domain = form.__dict__
         query = "INSERT INTO scientific_domain(Scientific_domain_name) VALUES ('{}');".format(newScientific_Domain['Scientific_domain_name'].data)
         try:
@@ -894,7 +899,7 @@ def createScientific_Domain():
     ## else, response for GET request
     return render_template("Create/create_scientific_domain.html", pageTitle = "Create Scientific_Domain", form = form)
 
-@app.route("/ScientificDomains/update/<int:Scientific_domain_name>", methods = ["POST"])
+@app.route("/ScientificDomains/update/<string:Scientific_domain_name>", methods = ["POST"])
 def updateScientific_Domain(Scientific_domain_name):
     """
     #Update a Scientific_domain in the database, by id
@@ -917,7 +922,7 @@ def updateScientific_Domain(Scientific_domain_name):
                 flash(error, "danger")
     return redirect(url_for("getScientificDomains"))
 
-@app.route("/ScientificDomains/delete/<int:Scientific_domain_name>", methods = ["POST"])
+@app.route("/ScientificDomains/delete/<string:Scientific_domain_name>", methods = ["POST"])
 def deleteScientific_Domain(Scientific_domain_name):
     """
     #Delete scientific_domain by id from database
@@ -968,7 +973,7 @@ def createWork():
     """
     form = WorksCreate()
     ## when the form is submitted
-    if(request.method == "POST" and form.validate_on_submit()):
+    if(request.method == "POST"):
         newWork = form.__dict__
         query = "INSERT INTO works(Project_idProject, researcher_idresearcher) VALUES ('{}', '{}');".format(newWork['Project_idProject'].data, newWork['researcher_idresearcher'].data)
         try:
@@ -991,6 +996,7 @@ def updateWork(Project_idProject, researcher_idresearcher):
     """
     form = WorksUpdate()
     updateData = form.__dict__
+    
     if(form.validate_on_submit()):
         query = "UPDATE works SET Project_idProject = '{}', researcher_idresearcher = '{}' WHERE Project_idProject = '{}' AND researcher_idresearcher = '{}';".format(updateData['Project_idProject'].data, updateData['researcher_idresearcher'].data,  Project_idProject, researcher_idresearcher)
         try:
@@ -998,7 +1004,7 @@ def updateWork(Project_idProject, researcher_idresearcher):
             cur.execute(query)
             db.connection.commit()
             cur.close()
-            flash("Phone updated successfully", "success")
+            flash(" Work updated successfully", "success")
         except Exception as e:
             flash(str(e), "danger")
     else:
@@ -1055,7 +1061,7 @@ def createProjectHasDomain():
     """
     form = ProjectHasDomainCreate()
     ## when the form is submitted
-    if(request.method == "POST" and form.validate_on_submit()):
+    if(request.method == "POST"):
         newProjectHasDomain = form.__dict__
         query = "INSERT INTO project_has_scientific_domain(Project_idProject, Scientific_domain_Scientific_domain_name) VALUES ('{}', '{}');".format(newProjectHasDomain['Project_idProject'].data, newProjectHasDomain['Scientific_domain_Scientific_domain_name'].data)
         try:

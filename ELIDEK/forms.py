@@ -51,24 +51,24 @@ class Get36(FlaskForm):
     
 class Get37(FlaskForm):
 	Executive_name = StringField(label = "Executive_name", validators = [Length(min=1, max=20), DataRequired(message="Name is a required field.")])
-	Orgname = StringField(label = "Orgname", validators = [Length(min=1, max=20), DataRequired(message="Organisation Name is a required field.")])
+	Orgname = StringField(label = "Orgname", validators = [Length(min=1), DataRequired(message="Organisation Name is a required field.")])
 	sumb = IntegerField(label = "Sum Up", validators = [NumberRange(min=0)])
 	submit = SubmitField("Create")
 
 class Get38(FlaskForm):
-	idresearcher = IntegerField(label = "idresearcher", validators = [Optional()])
-	Full_name = StringField(label = "Full Name of Researcher", validators = [Optional()])
-	cnt = IntegerField(label = "Count", validators = [NumberRange(min=0)])
-	submit = SubmitField("Create")
+    Full_name = StringField(label = "Full Name of Researcher", validators = [Optional()])
+    idresearcher = IntegerField(label = "idresearcher", validators = [Optional()])
+    cnt = IntegerField(label = "Count", validators = [NumberRange(min=0)])
+    submit = SubmitField("Create")
 
 #Create Classes
 class ProjectCreate(FlaskForm):
     idProject = IntegerField(label = "idProject", validators = [NumberRange(min=1)])
     Project_title = StringField(label = "Project_title", validators = [Length(min=1, max=45), DataRequired(message="Name is a required field.")])
     Project_summary = TextAreaField(label = "Project_summary", validators = [Length(min=1), DataRequired(message="Summary is a required field.")])
-    Project_budget = FloatField(label = "Project_budget", validators =  [NumberRange(min=0), Optional()])
     Project_starting = DateField(label = "Project_starting", validators = [Optional()])
     Project_ending = DateField(label = "Project_ending", validators = [Optional()])
+    Project_budget = FloatField(label = "Project_budget", validators =  [NumberRange(min=0), Optional()])
     org_idorg = IntegerField(label = "Organisation ID", validators = [NumberRange(min=1)])
     researcher_idresearcher = IntegerField(label = "Select Manager ID", validators = [NumberRange(min=1)])
     Executive_idExecutive = IntegerField(label = "Executive ID", validators = [NumberRange(min=1)])
@@ -91,14 +91,14 @@ class ResearcherCreate(FlaskForm):
 class OrganisationCreate(FlaskForm):
 	idorg = IntegerField(label = "idorg", validators = [Optional()])
 	City = StringField(label = "city", validators = [Length(min=1, max=20), DataRequired(message="City is a required field.")])
-	Street_name = StringField(label = "Street_name", validators = [Length(min=1, max=20), DataRequired(message="Street Name is a required field.")])
+	Street_name = StringField(label = "Street_name", validators = [Length(min=1), DataRequired(message="Street Name is a required field.")])
 	Postal_code = IntegerField(label = "Postal_code", validators = [NumberRange(min=00000, max=99999), DataRequired(message="Postal Code is a required field.")])
 	typec = RadioField(u'Organisation Types: ', choices=[('Uni','University'), ('Comp','Company'), ('RF', 'Research Facility')], validators = [DataRequired(message="Type of Organisation is a required field")] )
 	Research_facility_Budget_MoE = FloatField(label = "Research_facility_Budget_MoE", validators =  [NumberRange(min=0), Optional()])
 	Research_facility_Budget_private_sector = FloatField(label = "Research_facility_Budget_private_sector", validators =  [NumberRange(min=0), Optional()])
 	Company_Budget = FloatField(label = "Company_Budget", validators =  [NumberRange(min=0), Optional()])
 	University_Budget_MoE = FloatField(label = "University_Budget_MoE", validators =  [NumberRange(min=0), Optional()])
-	Orgname = StringField(label = "Orgname", validators = [Length(min=1, max=20), DataRequired(message="Organisation Name is a required field.")])
+	Orgname = StringField(label = "Orgname", validators = [Length(min=1), DataRequired(message="Organisation Name is a required field.")])
 	Abbreviation = StringField(label = "Abbreviation", validators = [Length(min=1, max=7), DataRequired(message="Abbreviation is a required field.")])
 	submit = SubmitField("Create")
 	
@@ -180,8 +180,8 @@ class OrganisationUpdate(FlaskForm):
 	Research_facility_Budget_private_sector = FloatField(label = "Research_facility_Budget_private_sector", validators =  [NumberRange(min=0), Optional()])
 	Company_Budget = FloatField(label = "Company_Budget", validators =  [NumberRange(min=0), Optional()])
 	University_Budget_MoE = FloatField(label = "University_Budget_MoE", validators =  [NumberRange(min=0), Optional()])
-	Orgname = StringField(label = "Orgname", validators = [Length(min=1, max=20), DataRequired(message="Organisation Name is a required field.")])
-	Abbreviation = StringField(label = "Abbreviation", validators = [Length(min=1, max=7), DataRequired(message="Abbreviation is a required field.")])
+	Orgname = StringField(label = "Orgname", validators = [Length(min=1), DataRequired(message="Organisation Name is a required field.")])
+	Abbreviation = StringField(label = "Abbreviation", validators = [Length(min=1), DataRequired(message="Abbreviation is a required field.")])
 	submit = SubmitField("Submit", validators = [DataRequired(message="Name is a required field.")])
 
 	
