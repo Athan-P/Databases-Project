@@ -16,7 +16,7 @@ Listed alphabetically:
       - Open XAMPP Control Panel
       - Start Apache and MySQL (you should do that no matter)
       - From Apache open Config and press Apache (httpd.conf)
-      - ctrl+f and search for `AddHndler` and add .py at the end
+      - ctrl+f and search for `AddHandler` and add .py at the end
  - [Python](https://www.python.org/downloads/), with the additional libraries:
     - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
     - [Flask-MySQLdb](https://flask-mysqldb.readthedocs.io/en/latest/)
